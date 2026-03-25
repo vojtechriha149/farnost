@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Římskokatolická farnost Sedlnice</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fdfcf8;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        header {
+            position: relative;
+            min-height: 420px;
+            padding: 60px 20px;
+            color: #fff;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("img/header-bg.webp") center / cover no-repeat;
+        }
+
+        header h1 {
+            font-size: 2.6em;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        nav a {
+            position: relative;
+            padding: 8px 12px;
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 2px;
+            background: #fff;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #f0e6d2;
+        }
+
+        nav a:hover::after {
+            transform: scaleX(1);
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            nav {
+                margin-top: 20px;
+            }
+        }
+
+        section {
+            padding: 40px 20px 0px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #444;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            margin-top: 20px;
+        }
+
+        ul {
+            padding-left: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        table th {
+            background: #eee;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 100%;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        footer {
+            background: #f5f3ee;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .section-text {
+            margin-bottom: 20px;
+        }
+
+        .odkaz-odkaz {
+            color: #3a5f7d;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .odkaz-odkaz:hover {
+            text-decoration: underline;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 35px;
+        }
+
+        .icon-item {
+            background: #fff;
+            border-radius: 10px;
+            padding: 12px 10px 14px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .icon-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+        }
+
+        .icon-item img {
+            width: 65%;
+            aspect-ratio: 1 / 1;
+            object-fit: contain;
+            margin: 0 auto 8px;
+            display: block;
+        }
+
+        .icon-item span {
+            display: block;
+            font-size: 0.85em;
+            color: #555;
+            line-height: 1.3;
+        }
+
+        .icon-grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 360px;
+        }
+
+        @media (max-width: 768px) {
+            .icon-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        #aktualni table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #aktualni th,
+        #aktualni td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        #aktualni th {
+            background: #eee;
+            font-weight: bold;
+        }
+
+        #aktualni td a {
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        #aktualni td a:hover {
+            text-decoration: underline;
+            color: #222;
+        }
+
+        #aktualni .icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .no-mass {
+            color: #b22222;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="hero">
+        <h1>Římskokatolická farnost Sedlnice</h1>
+        <p>Vítejte na stránkách naší farnosti</p>
+
+        <nav>
+            <a href="#aktualni">Bohoslužby</a>
+            <a href="#historie">Historie</a>
+            <a href="#aktuality">Aktuality</a>
+            <a href="#odkazy">Odkazy</a>
+            <a href="#kontakt">Kontakt</a>
+        </nav>
+    </header>
+
+    <section id="aktualni">
+        <h2>Aktuální pořad bohoslužeb</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Den</th>
+                        <th>Datum</th>
+                        <th>Čas</th>
+                        <th>Odkaz na liturgii</th>
+                    </tr>
+                </thead>
+                <tbody id="aktualni-tabulka">
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Pravidelný pořad -->
+    <section id="pravidelny">
+        <h2>Pravidelný pořad bohoslužeb</h2>
+        <table>
+            <tr>
+                <th>Den</th>
+                <th>Čas</th>
+            </tr>
+            <tr>
+                <td>Neděle</td>
+                <td>8:00</td>
+            </tr>
+            <tr>
+                <td>Středa</td>
+                <td>16:30</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- Historie -->
+    <section id="historie">
+        <h2>Historie kostela</h2>
+        <p class="section-text">
+            Kostel, který je zasvěcený archandělu Michaelovi, je významnou dominantou obce. Původní kostel byl dřevěný.
+            Jelikož však časem nemohl pojmout všechny věřící a byl již značně starý, v roce 1824 se obec rozhodla
+            postavit kostel nový. O dva roky později (1826) byl postaven kostel nový v barokním slohu. Hlavní oltář byl
+            zasvěcený sv. archandělu Michaelovi. Sochy v bočních oltářích - socha Nejsvětějšího srdce Ježíše a socha
+            Srdce pany Marie byly pořízeny až v roce 1907. Ve věži kostela jsou zavěšeny tři zvony, z nichž největší
+            vážící kolem 800 kg je rovněž zasvěcený sv. archandělu Michaelovi. Okna kostela zdobí barevné vitráže. Při
+            vstupu do kostela jsou na bočních stěnách zazděny renesanční náhrobky Jana Sedlnického z Choltic (+1573) a
+            jeho choti Johanky z Limberka (+1573). Oba náhrobky pocházejí ze starého kostela.
+        </p>
+    </section>
+
+    <section id="galerie">
+        <div class="gallery">
+            <img src="img/fotka1.webp" alt="Kostel exteriér">
+            <img src="img/fotka2.webp" alt="Interiér kostela">
+            <img src="img/fotka3.webp" alt="Farní akce">
+            <img src="img/fotka4.webp" alt="Socha svatého">
+            <img src="img/fotka7.webp" alt="Výzdoba kostela">
+            <img src="img/fotka6.webp" alt="Výzdoba kostela">
+            <img src="img/fotka5.webp" alt="Výzdoba kostela">
+        </div>
+    </section>
+
+    <!-- Aktuality -->
+    <section id="aktuality">
+        <h2>Aktuality</h2>
+        <h3>Výuka náboženství</h3>
+        <ul>
+            <li>v ZŠ Sedlnice v pondělí 13:30 - 14:30</li>
+            <li>kontakt: Mgr. Pavla Říhová, tel.: 737 475 814</li>
+        </ul>
+        <h3>Pro děti</h3>
+        <ul>
+            <li>Kartičky k nedělním evangeliím <a
+                    href="https://www.katechetiolomouc.cz/index.php/2024/02/23/karticky-k-nedelnim-evangeliim-2024-2025/">zde</a>
+            </li>
+        </ul>
+        <h3>Schola</h3>
+        <ul>
+            <li>kontakt: Anežka Serdahelyová, tel.: 775 608 169</li>
+        </ul>
+        <h3>Modlitby matek</h3>
+        <ul>
+            <li>každé pondělí v 19:30 v kostele</li>
+            <li>kontakt: Pavla Říhová, tel.: 737 475 814</li>
+        </ul>
+    </section>
+
+    <!-- Novéna CSS-->
+    <style type="text/css">
+        .faq {
+            max-width: 600px;
+            margin: 2rem auto;
+            font-family: sans-serif;
+        }
+
+        .faq-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: #fff;
+            overflow: hidden;
+
+            max-height: 60px;
+            transition: max-height 0.4s ease;
+        }
+
+        .faq-item summary {
+            list-style: none;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            background: #f7f7f7;
+        }
+
+        .faq-item summary:hover {
+            background: #eee;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item[open] .arrow {
+            transform: rotate(180deg);
+        }
+
+        .faq-item[open] {
+            max-height: 2000px;
+        }
+
+        .faq-item p {
+            padding: 16px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .answer {
+            padding: 16px;
+            border-radius: 0 0 8px 8px;
+            text-align: justify;
+        }
+
+        /* překrytí modlitby */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 60px 20px;
+
+        }
+
+        .prayer-box {
+            background: #fdfcf8;
+            max-width: 600px;
+            width: 90%;
+            max-height: 100vh;
+            padding: 30px 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            position: relative;
+            line-height: 1.7;
+
+            overflow-y: auto;
+
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .overlay.active .prayer-box {
+            transform: scale(1);
+        }
+
+        .prayer-box h3 {
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            font-size: 28px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+        .open-prayer {
+            color: #3a5f7d;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .open-prayer:hover {
+            text-decoration: underline;
+        }
+
+        .prayer-content {
+            display: none;
+        }
+
+        .prayer-content.active {
+            display: block;
+        }
+    </style>
+
+    <!-- Novéna -->
+    <section id="novena">
+        <h2>Novéna k Michaelovi Archandělovi</h2>
+        <details class="faq-item">
+            <summary> <span class="question">PRVNÍ DEN</span> <span class="arrow">▼</span> </summary>
+            <div class="answer">
+                <br>
+                <p>Píseň<br>
+                    <br>
+                    <strong>Modlitba:</strong><br>
+                    Svatý Michaeli Archanděli, plný víry, pokory, vděčnosti a lásky, vzdálený od podrobení se
+                    našeptávání vzbouřeného Lucifera a všech padlých andělů, zmocnil ses zbytku nebeských zástupů k
+                    obhajobě Boží věci a získal úplné vítězství. Úpěnlivě tě prosíme, vypros nám milost odhalení
+                    veškerých nástrah a odrazení všech útoků satana, abychom je podle tvého příkladu překonali a jednou
+                    si zasloužili slavné místo, ze kterého oni byli svržení. Amen.<br>
+                    <br>
+                    Otče náš…<br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="michael">Modlitba papeže Lea XIII.</a><br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="litanie">Litanie ke sv. Michaelovi</a><br>
+                    <br>
+                    Závěrečná píseň
+                </p>
+            </div>
+        </details>
+        <details class="faq-item">
+            <summary> <span class="question">DRUHÝ DEN</span> <span class="arrow">▼</span> </summary>
+            <div class="answer">
+                <br>
+                <p>Píseň<br>
+                    <br>
+                    <strong>Modlitba:</strong><br>
+                    Svatý Michaeli Archanděli, jmenovaný Bohem ochráncem celého vyvoleného národa – podpíral jsi ho v
+                    nepřízních, rozptyloval pochybnosti a uspokojoval veškeré potřeby, – rozdělil jsi moře napůl,
+                    posílal z mraků déšť Manny a dostál vodu ze skal – prosíme tě, abys v každé potřebě osvěcoval,
+                    podpíral, bránil a podporoval naše duše, pomáhajíce překonat veškeré protivenství, s jakými se
+                    potkáváme na každém kroku na scestích tohoto světa. Prosíme, abychom se mohli dostat bezpečně do
+                    toho království pokoje a radostí, kterého pouhým stínem byla země zaslíbená Abrahamovi. Amen.<br>
+                    <br>
+                    Otče náš…<br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="michael">Modlitba papeže Lea XIII.</a><br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="litanie">Litanie ke sv. Michaelovi</a><br>
+                    <br>
+                    Závěrečná píseň
+                </p>
+            </div>
+        </details>
+        <details class="faq-item">
+            <summary> <span class="question">TŘETÍ DEN</span> <span class="arrow">▼</span> </summary>
+            <div class="answer">
+                <br>
+                <p>Píseň<br>
+                    <br>
+                    <strong>Modlitba:</strong><br>
+                    Svatý Michaeli Archanděli, jmenovaný ochráncem katolické Církve, zajistil jsi jí vítězství nad
+                    zaslepením nevěřících skrze nauku Apoštolů; nad krutostí tyranů, skrze vytrvalost jejích mučedníků;
+                    nad pokrytectvím heretiků skrze moudrost jejích doktorů, nad nepravostí tohoto světa skrze čistotu
+                    panen, svatost pontifikátu a zkrušenost kajícníků, braň jí ustavičně před nástrahami satana, chraň
+                    před zneuctěním nehodnými syny, aby se vždycky jevila jako jediná, svatá, katolická a všeobecná, a
+                    také abychom se drželi víry do konce našeho pozemského života. Amen.<br>
+                    <br>
+                    Otče náš…<br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="michael">Modlitba papeže Lea XIII.</a><br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="litanie">Litanie ke sv. Michaelovi</a><br>
+                    <br>
+                    Závěrečná píseň
+                </p>
+            </div>
+        </details>
+        <details class="faq-item">
+            <summary> <span class="question">ČTVRTÝ DEN</span> <span class="arrow">▼</span> </summary>
+            <div class="answer">
+                <br>
+                <p>Píseň<br>
+                    <br>
+                    <strong>Modlitba:</strong><br>
+                    Svatý Michaeli Archanděli, který stojíš při oltářích, abys odnášel naše modlitby a oběti před věčný
+                    Majestát Boha, prosíme Tě, pomáhej nám ve všech zkouškách věrnosti křesťanství, abychom si uchovali
+                    vytrvalost, paměť a víru, které budou za tvou přímluvou obětované Bohu a přijaté Jím jako voňavé
+                    kadidlo. Amen.<br>
+                    <br>
+                    Otče náš…<br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="michael">Modlitba papeže Lea XIII.</a><br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="litanie">Litanie ke sv. Michaelovi</a><br>
+                    <br>
+                    Závěrečná píseň
+                </p>
+            </div>
+        </details>
+        <details class="faq-item">
+            <summary> <span class="question">PÁTÝ DEN</span> <span class="arrow">▼</span> </summary>
+            <div class="answer">
+                <br>
+                <p>Píseň<br>
+                    <br>
+                    <strong>Modlitba:</strong><br>
+                    Svatý Michaeli Archanděli, u kterého nohou se sklání v pokoře největší důstojnosti tohoto světa,
+                    podívej se milostivým okem na naše srdce, ovládnuté vášněmi tohoto světa a zraněné tolika hříchy,
+                    vyjednej nám milost jejich překonání, abychom dosáhli nového života s Bohem a v Bohu. Amen.<br>
+                    <br>
+                    Otče náš…<br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="michael">Modlitba papeže Lea XIII.</a><br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="litanie">Litanie ke sv. Michaelovi</a><br>
+                    <br>
+                    Závěrečná píseň
+                </p>
+            </div>
+        </details>
+        <details class="faq-item">
+            <summary> <span class="question">ŠESTÝ DEN</span> <span class="arrow">▼</span> </summary>
+            <div class="answer">
+                <br>
+                <p>Píseň<br>
+                    <br>
+                    <strong>Modlitba:</strong><br>
+                    Svatý Michaeli Archanděli, který jsi postrach satana, tebe nám poslal Bůh, abys nás chránil před
+                    jeho přepadeními. Prosíme tě, přidávej nám naději svou neobyčejnou přítomností, podporuj nás svou
+                    nepřekonatelnou silou, abychom dokázali překonat všechny nepřátele duše a těla. Dej, abychom díky
+                    tvé pomoci byli uchránění před hříchem a peklem, a celou věčnost budeme chválit tvou moc a dobrotu.
+                    Amen.<br>
+                    <br>
+                    Otče náš…<br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="michael">Modlitba papeže Lea XIII.</a><br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="litanie">Litanie ke sv. Michaelovi</a><br>
+                    <br>
+                    Závěrečná píseň
+                </p>
+            </div>
+        </details>
+        <details class="faq-item">
+            <summary> <span class="question">SEDMÝ DEN</span> <span class="arrow">▼</span> </summary>
+            <div class="answer">
+                <br>
+                <p>Píseň<br>
+                    <br>
+                    <strong>Modlitba:</strong><br>
+                    Svatý Michaeli Archanděli, který sestupuješ do očistce plného trápení, abys osvobozoval duše
+                    vyvolených a přenášel je do věčného štěstí, prosíme tě, abychom skrze svatý a obětavý život, vyhnuli
+                    se očistcovým mukám. A jestliže z ohledu na jakékoliv hříchy a viny, anebo nedostatek pokání v tom
+                    životě, byli odkázání na snášení jich skrze nějakou dobu, přimlouvej se za nás u Boha, a přesvědč
+                    lidí na zemi, aby modlitbou umožňovali nám přechod do nebe, kde spolu s anděly a svatými, budeme
+                    před Bohem zpívat hymnus velebení. Amen.<br>
+                    <br>
+                    Otče náš…<br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="michael">Modlitba papeže Lea XIII.</a><br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="litanie">Litanie ke sv. Michaelovi</a><br>
+                    <br>
+                    Závěrečná píseň
+                </p>
+            </div>
+        </details>
+        <details class="faq-item">
+            <summary> <span class="question">OSMÝ DEN</span> <span class="arrow">▼</span> </summary>
+            <div class="answer">
+                <br>
+                <p>Píseň<br>
+                    <br>
+                    <strong>Modlitba:</strong><br>
+                    Svatý Michaeli Archanděli, kterému je určené předpovědět poslední dobu na zemi, dej, aby mě Bůh
+                    ocenil dobrotivě a milostivě, po dřívějším potrestání za mé hříchy tak, aby mé tělo mohlo vstát z
+                    mrtvých vprostřed spravedlivých, a dostoupit blahoslavené a slavné nesmrtelnosti, a můj duch, aby se
+                    posiloval pohledem na Pána Ježíše, který je radostí a útěchou všech vyvolených. Amen.<br>
+                    <br>
+                    Otče náš…<br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="michael">Modlitba papeže Lea XIII.</a><br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="litanie">Litanie ke sv. Michaelovi</a><br>
+                    <br>
+                    Závěrečná píseň
+                </p>
+            </div>
+        </details>
+        <details class="faq-item">
+            <summary> <span class="question">DEVÁTÝ DEN</span> <span class="arrow">▼</span> </summary>
+            <div class="answer">
+                <br>
+                <p>Píseň<br>
+                    <br>
+                    <strong>Modlitba:</strong><br>
+                    Svatý Michaeli Archanděli, ty ji správce celého lidstva a strážník Církve, přiveď do ovčince Ježíše
+                    Krista všechny ovce, které se ztratily, hříšníky a odpadlé od víry heretiky, aby všichni spojení v
+                    jedno, mohli věčně velebit Nejvyššího Boha. Uchovej celou svatou Církev, na cestě ke spáse, a
+                    papeže, biskupy a kněze chraň před veškerými nepřáteli duše a těla. Amen.<br>
+                    <br>
+                    Otče náš…<br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="michael">Modlitba papeže Lea XIII.</a><br>
+                    <br>
+                    <a href="#" class="open-prayer" data-target="litanie">Litanie ke sv. Michaelovi</a><br>
+                    <br>
+                    Závěrečná píseň
+                </p>
+            </div>
+        </details>
+    </section>
+
+    <div id="prayerOverlay" class="overlay">
+        <div class="prayer-box">
+            <button class="close-btn">&times;</button>
+            <div class="prayer-content" data-content="michael">
+                <h3>Modlitba papeže Lva XIII. k sv. archandělu Michaelovi</h3>
+                <p>Slavný Kníže nebeských vojsk, svatý Michaeli, archanděle,<br>
+                    braň nás v boji proti knížatům a mocnostem, proti světovládcům těchto temnot, proti zlým duchům v
+                    ovzduší (Ef 6,12).<br>
+                    Přijď na pomoc lidem, které Bůh stvořil k svému obrazu a podobě a za velikou cenu vykoupil ze
+                    Satanova otroctví.<br>
+                    <br>
+                    Tebe ctí svatá církev jako svého strážce a ochránce, tobě svěřil Bůh vykoupené duše, abys je
+                    přiváděl do věčné blaženosti.<br>
+                    Pros Boha pokoje, ať pod našima nohama zdrtí Satana, aby už nemohl držet lidi v zajetí a škodit
+                    církvi.<br>
+                    <br>
+                    Přednes naše modlitby před tváří Nejvyššího, aby na nás brzo sestoupilo milosrdenství Páně.<br>
+                    Uchop draka, starého hada, kterým je ďábel a satan, a spoutaného jej svrhni do propasti, aby už
+                    nikdy nesváděl národy (srov. Zj 20).<br>
+                </p>
+            </div>
+            <div class="prayer-content" data-content="litanie">
+                <h3>Litanie ke sv. archandělu Michaelovi</h3>
+                <div class="litany">
+                    <p>Pane, smiluj se. – Pane, smiluj se.</p>
+                    <p>Kriste, smiluj se. – Kriste, smiluj se.</p>
+                    <p>Pane, smiluj se. – Pane, smiluj se.</p>
+                    <br>
+                    <p>Kriste, uslyš nás. – Kriste, uslyš nás.</p>
+                    <p>Kriste, vyslyš nás. – Kriste, vyslyš nás.</p>
+                    <br>
+                    <p>Bože, náš nebeský Otče, – smiluj se nad námi.</p>
+                    <p>Bože Synu, Vykupiteli světa, – smiluj se nad námi.</p>
+                    <p>Bože Duchu Svatý, – smiluj se nad námi.</p>
+                    <p>Bože, v Trojici jediný, – smiluj se nad námi.</p>
+                    <br>
+                    <p>Svatá Maria, královno andělů, – oroduj za nás.</p>
+                    <br>
+                    <p>Svatý Michaeli, archanděli, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, plný božské moudrosti, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, vzore pokory, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, strážce ráje, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, anděli pokoje, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, vůdce a utěšiteli Izraele, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, věrný ochránce církve, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, kníže andělů, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, pouto bratrské lásky, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, světlo a naděje umírajících, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, utěšiteli duší v očistci, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, oporo ztrápených, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, sílo Boží, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, ctiteli slávy Boží, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, mocný přímluvce křesťanů, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, vítězi nad odvěkým drakem, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, vůdce duší do nebe, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, služebníku u nebeského oltáře, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, zvěstovateli Božího milosrdenství, – oroduj za nás.</p>
+                    <p>Svatý Michaeli, ochránce proti nemocem, – oroduj za nás.</p>
+                    <br>
+                    <p>Beránku Boží, který snímáš hříchy světa, – smiluj se nad námi.</p>
+                    <p>Beránku Boží, který snímáš hříchy světa, – smiluj se nad námi.</p>
+                    <p>Beránku Boží, který snímáš hříchy světa, – smiluj se nad námi.</p>
+                    <br>
+                    <p><strong>Modleme se:</strong></p>
+                    <p>
+                        Svatý Michaeli, archanděli, braň nás v boji proti zlobě a úkladům ďáblovým.
+                        Kníže nebeského vojska, svrhni božskou mocí do pekelné propasti satana
+                        a zlé duchy, kteří usilují o zkázu duší. <br>
+                        Amen.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Odkazy -->
+    <section id="odkazy">
+        <h2>Odkazy</h2>
+        <h3>Okolní farnosti</h3>
+        <ul>
+            <li><a href="https://www.farnostpribor.cz/" class="odkaz-odkaz">Farnost Příbor</a></li>
+            <li><a href="https://fnj.cz/" class="odkaz-odkaz">Farnost Nový Jičín</a></li>
+            <li><a href="https://farnostkoprivnice.cz/" class="odkaz-odkaz">Farnost Kopřivnice</a></li>
+            <li><a href="https://www.doo.cz/" class="odkaz-odkaz">Biskupství ostravskoopavské</a></li>
+        </ul>
+        <h3>K zamyšlení</h3>
+        <ul>
+            <li><a href="http://www.vira.cz/Nedelni-liturgie" class="odkaz-odkaz">Bible na neděli a na každý den v
+                    týdnu</a></li>
+            <li><a href="http://www.vira.cz/texty/tema-tydne/" class="odkaz-odkaz">Téma týdne</a></li>
+        </ul>
+        <h3>Média</h3>
+        <ul>
+            <li><a href="https://www.tvnoe.cz/" class="odkaz-odkaz">TV Noe</a></li>
+            <li><a href="https://www.vaticannews.va/cs.html" class="odkaz-odkaz">Vatican News</a></li>
+            <li><a href="https://www.christnet.eu/" class="odkaz-odkaz">Chrisnet</a></li>
+            <li><a href="https://www.modlitba.cz/" class="odkaz-odkaz">Modlitba</a></li>
+            <li><a href="http://www.katolik.cz/" class="odkaz-odkaz">Katolik</a></li>
+            <li><a href="https://www.pastorace.cz/" class="odkaz-odkaz">Pastorace</a></li>
+            <li><a href="https://katyd.cirkev.cz/" class="odkaz-odkaz">Katolický týdeník</a></li>
+            <li><a href="https://www.vira.cz/" class="odkaz-odkaz">Víra</a></li>
+        </ul>
+        <h3>Pro děti</h3>
+        <ul>
+            <li><a href="https://deti.vira.cz/" class="odkaz-odkaz">Víra dětem</a></li>
+            <li><a href="https://casopisnezbeda.cz/" class="odkaz-odkaz">Časopis nezbeda</a></li>
+            <li><a href="https://www.bible.com/cs/kids" class="odkaz-odkaz">Aplikace Bible pro děti</a></li>
+            <li><a href="https://www.katechetiolomouc.cz/index.php/2024/02/23/karticky-k-nedelnim-evangeliim-2024-2025/"
+                    class="odkaz-odkaz">Kartičky k nedělním evangeliím</a></li>
+        </ul>
+    </section>
+
+    <!-- Kontakt -->
+    <section id="kontakt">
+        <h2>Kontakty</h2>
+        <ul>
+            <li>Farnost je spravována z Římskokatolické farnosti Příbor, Stojanova 364, 742 58 Příbor</li>
+        </ul>
+        <h3>Duchovní správce farnosti</h3>
+        <ul>
+            <li>P. Jindřich Švorčík, farní úřad Příbor</li>
+            <li>mobil: 607 639 798</li>
+            <li>e-mail: rkf.sedlnice@doo.cz</li>
+        </ul>
+        <h3>Správa kostela - kostelník</h3>
+        <ul>
+            <li>Ing. Petr Říha</li>
+            <li>mobil: 776 025 696</li>
+        </ul>
+    </section>
+
+    <!-- Mezera -->
+    <section id="mezera">
+        <br>
+    </section>
+
+    <!-- Patička -->
+    <footer id="paticka">
+        <p>© 2026 Římskokatolická farnost Sedlnice</p>
+    </footer>
+
+    <!-- Lightbox script -->
+    <div class="lightbox" id="lightbox">
+        <img src="" alt="">
+    </div>
+
+    <script>
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        document.querySelectorAll('.gallery img').forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightbox.style.display = 'flex';
+            });
+        });
+        lightbox.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+    </script>
+
+    <!-- Script pro novénu -->
+    <script>
+        document.addEventListener('click', function (e) {
+
+            const link = e.target.closest('.open-prayer');
+            if (!link) return;
+
+            e.preventDefault();
+
+            const target = link.dataset.target;
+            const overlay = document.getElementById('prayerOverlay');
+            if (!overlay) return;
+
+            const contents = overlay.querySelectorAll('.prayer-content');
+            contents.forEach(c => c.classList.remove('active'));
+
+            const activeContent = overlay.querySelector(
+                '.prayer-content[data-content="' + target + '"]'
+            );
+
+            if (activeContent) {
+                activeContent.classList.add('active');
+                overlay.classList.add('active');
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('close-btn') ||
+                e.target.id === 'prayerOverlay') {
+
+                document.getElementById('prayerOverlay')
+                    .classList.remove('active');
+            }
+        });
+    </script>
+
+    <!-- Script pro vkládání tabulky -->
+    <script>
+        fetch("aktualni.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("aktualni-tabulka").innerHTML = data;
+            });
+    </script>
+
+</body>
+
+</html>
