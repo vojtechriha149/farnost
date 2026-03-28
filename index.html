@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Římskokatolická farnost Sedlnice</title>
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="4c9bbcaa-0244-437f-a9a2-2e7f23314494"></script>
+    <script defer src="https://cloud.umami.is/script.js"
+        data-website-id="4c9bbcaa-0244-437f-a9a2-2e7f23314494"></script>
     <link rel="icon" type="image" href="img/misal.webp">
     <link rel="preload" fetchpriority="high" as="image" href="img/header-bg.webp" type="image/webp">
 
@@ -219,6 +220,10 @@
             text-decoration: underline;
         }
 
+        .icon {
+            border-radius: 25%;
+        }
+
         .icon-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -308,6 +313,36 @@
 
         .no-mass {
             color: #b22222;
+            font-weight: bold;
+        }
+
+        #scrollToTop {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background: var(--glass-bg);
+            color: #333;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 25%;
+            width: 50px;
+            height: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        #scrollToTop:hover {
+            transform: scale(1.15);
+            background: #3a5f7d;
+            color: #fff;
+        }
+
+        .arrow {
+            font-size: 20px;
             font-weight: bold;
         }
     </style>
@@ -402,8 +437,9 @@
         </ul>
         <h3>Pro děti</h3>
         <ul>
-            <li>Kartičky k nedělním evangeliím 
-                <a href="https://www.katechetiolomouc.cz/index.php/2024/02/23/karticky-k-nedelnim-evangeliim-2024-2025/" class="odkaz-odkaz">zde</a>
+            <li>Kartičky k nedělním evangeliím
+                <a href="https://www.katechetiolomouc.cz/index.php/2024/02/23/karticky-k-nedelnim-evangeliim-2024-2025/"
+                    class="odkaz-odkaz">zde</a>
             </li>
         </ul>
         <h3>Schola</h3>
@@ -903,10 +939,13 @@
         </ul>
     </section>
 
-    <!-- Mezera -->
     <section id="mezera">
         <br>
     </section>
+
+    <button id="scrollToTop" title="Nahoru">
+        <span class="arrow">↑</span>
+    </button>
 
     <!-- Patička -->
     <footer id="paticka">
@@ -993,43 +1032,63 @@
             });
     </script>
 
-<script>
-    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
+    <!-- Script pro plyulý přechod -->
+    <script>
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
 
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        
-        if (targetElement) {
-            const startPosition = window.pageYOffset;
-            const targetPosition = targetElement.getBoundingClientRect().top + startPosition - 0;
-            const distance = targetPosition - startPosition;
-            const duration = 1800; 
-            let startTime = null;
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
 
-            function appleEasing(t) {
-                return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-            }
+                if (targetElement) {
+                    const startPosition = window.pageYOffset;
+                    const targetPosition = targetElement.getBoundingClientRect().top + startPosition - 0;
+                    const distance = targetPosition - startPosition;
+                    const duration = 1800;
+                    let startTime = null;
 
-            function animation(currentTime) {
-                if (startTime === null) startTime = currentTime;
-                const timeElapsed = currentTime - startTime;
-                const progress = Math.min(timeElapsed / duration, 1);
-                
-                window.scrollTo(0, startPosition + distance * appleEasing(progress));
-                
-                if (timeElapsed < duration) {
+                    function appleEasing(t) {
+                        return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+                    }
+
+                    function animation(currentTime) {
+                        if (startTime === null) startTime = currentTime;
+                        const timeElapsed = currentTime - startTime;
+                        const progress = Math.min(timeElapsed / duration, 1);
+
+                        window.scrollTo(0, startPosition + distance * appleEasing(progress));
+
+                        if (timeElapsed < duration) {
+                            requestAnimationFrame(animation);
+                        }
+                    }
+
                     requestAnimationFrame(animation);
                 }
+            });
+        });
+    </script>
+
+    <!-- Script pro šipku -->
+    <script>
+        const topBtn = document.getElementById("scrollToTop");
+
+        window.onscroll = function () {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                topBtn.style.display = "block";
+            } else {
+                topBtn.style.display = "none";
             }
+        };
 
-            requestAnimationFrame(animation);
-        }
-    });
-});
-</script>
-
+        topBtn.onclick = function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        };
+    </script>
 
 </body>
 
