@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Římskokatolická farnost Sedlnice</title>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="4c9bbcaa-0244-437f-a9a2-2e7f23314494"></script>
     <link rel="icon" type="image" href="img/misal.webp">
     <link rel="preload" fetchpriority="high" as="image" href="img/header-bg.webp" type="image/webp">
 
@@ -388,6 +389,7 @@
             <img src="img/fotka6.webp" alt="Výzdoba kostela">
             <img src="img/fotka5.webp" alt="Výzdoba kostela">
         </div>
+        <br>
     </section>
 
     <!-- Aktuality -->
@@ -400,8 +402,8 @@
         </ul>
         <h3>Pro děti</h3>
         <ul>
-            <li>Kartičky k nedělním evangeliím <a
-                    href="https://www.katechetiolomouc.cz/index.php/2024/02/23/karticky-k-nedelnim-evangeliim-2024-2025/">zde</a>
+            <li>Kartičky k nedělním evangeliím 
+                <a href="https://www.katechetiolomouc.cz/index.php/2024/02/23/karticky-k-nedelnim-evangeliim-2024-2025/" class="odkaz-odkaz">zde</a>
             </li>
         </ul>
         <h3>Schola</h3>
@@ -990,6 +992,44 @@
                 document.getElementById("aktualni-tabulka").innerHTML = data;
             });
     </script>
+
+<script>
+    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            const startPosition = window.pageYOffset;
+            const targetPosition = targetElement.getBoundingClientRect().top + startPosition - 0;
+            const distance = targetPosition - startPosition;
+            const duration = 1800; 
+            let startTime = null;
+
+            function appleEasing(t) {
+                return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+            }
+
+            function animation(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                const progress = Math.min(timeElapsed / duration, 1);
+                
+                window.scrollTo(0, startPosition + distance * appleEasing(progress));
+                
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(animation);
+                }
+            }
+
+            requestAnimationFrame(animation);
+        }
+    });
+});
+</script>
+
 
 </body>
 
